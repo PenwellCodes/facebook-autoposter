@@ -1,6 +1,6 @@
 import cron from "node-cron";
 import ScheduledPost from "../models/ScheduledPost.js";
-import { publishPhotoToPage } from "../services/facebookService.js";
+import { publishPhotoToPage } from "../services/FacebookService.js";
 
 export function startPostPublisher() {
   cron.schedule("* * * * *", async () => {

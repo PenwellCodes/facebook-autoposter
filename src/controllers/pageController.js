@@ -1,6 +1,6 @@
 import User from "../models/User.js";
 import Page from "../models/Page.js";
-import { fetchManagedPages } from "../services/facebookService.js";
+import { fetchManagedPages } from "../services/FacebookService.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 
 export const getPages = asyncHandler(async (req, res) => {

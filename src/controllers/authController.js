@@ -5,7 +5,7 @@ import {
   fetchManagedPages,
   getCurrentUserProfile,
   getFacebookLoginUrl
-} from "../services/facebookService.js";
+} from "../services/FacebookService.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 
 export const redirectToFacebook = asyncHandler(async (req, res) => {
