@@ -8,6 +8,7 @@ import { errorHandler } from "./middlewares/errorHandler.js";
 import aiRoutes from "./routes/aiRoutes.js";
 
 
+
 const app = express();
 
 app.use(cors());
