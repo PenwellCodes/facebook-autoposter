@@ -1,6 +1,6 @@
 import Page from "../models/Page.js";
 import ScheduledPost from "../models/ScheduledPost.js";
-import { publishPhotoToPage } from "../services/facebookService.js";
+import { publishPhotoToPage } from "../services/FacebookService.js";
 
 export async function createPost(req, res) {
   try {

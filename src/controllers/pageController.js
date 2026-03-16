@@ -1,7 +1,7 @@
 import Page from "../models/Page.js";
 import User from "../models/User.js";
 import Client from "../models/Client.js";
-import { fetchManagedPages } from "../services/facebookService.js";
+import { fetchManagedPages } from "../services/FacebookService.js";
 
 export async function getPages(req, res) {
   try {
