@@ -6,6 +6,7 @@ import pageRoutes from "./routes/pageRoutes.js";
 import postRoutes from "./routes/postRoutes.js";
 import { errorHandler } from "./middlewares/errorHandler.js";
 import aiRoutes from "./routes/aiRoutes.js";
+import clientRoutes from "./routes/clientRoutes.js";
 
 
 
@@ -26,6 +27,7 @@ app.use("/api/pages", pageRoutes);
 app.use("/api/media", mediaRoutes);
 app.use("/api/posts", postRoutes);
 app.use("/api/ai", aiRoutes);
+app.use("/api/clients", clientRoutes);
 
 app.use(errorHandler);
 

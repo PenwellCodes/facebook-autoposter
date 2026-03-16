@@ -5,7 +5,7 @@ import {
   fetchManagedPages,
   getCurrentUserProfile,
   getFacebookLoginUrl
-} from "../services/FacebookService.js";
+} from "../services/facebookService.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 
 export const redirectToFacebook = asyncHandler(async (req, res) => {
@@ -26,7 +26,24 @@ export const facebookCallback = asyncHandler(async (req, res) => {
     return res.status(400).json({ message: "Missing authorization code" });
   }
 
-  const userAccessToken = await exchangeCodeForAccessToken(code);
+  let userAccessToken;
+  try {
+    userAccessToken = await exchangeCodeForAccessToken(code);
+  } catch (err) {
+    const fbError = err?.response?.data?.error;
+    const fbMessage = fbError?.message || err?.message || "Facebook token exchange failed";
+
+    // Common case: the user waited too long, or the code was already used once.
+    if (fbError?.type === "OAuthException" && fbError?.code === 100) {
+      res.status(400);
+      throw new Error(
+        `Facebook authorization code is invalid/expired. Please click “Connect Facebook” again. (${fbMessage})`
+      );
+    }
+
+    res.status(502);
+    throw new Error(`Facebook token exchange failed. (${fbMessage})`);
+  }
   const profile = await getCurrentUserProfile(userAccessToken);
 
   let user = await User.findOne({ facebookUserId: profile.id });
@@ -48,11 +65,11 @@ export const facebookCallback = asyncHandler(async (req, res) => {
   for (const page of pages) {
     await Page.findOneAndUpdate(
       {
-        userId: user._id,
+        agencyOwnerId: user._id,
         pageId: page.id
       },
       {
-        userId: user._id,
+        agencyOwnerId: user._id,
         pageId: page.id,
         name: page.name,
         category: page.category || "",
